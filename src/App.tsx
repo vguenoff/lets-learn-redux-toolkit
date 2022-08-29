@@ -1,14 +1,17 @@
+import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from './app/hooks'
 import {
     incremented,
     decremented,
     reset,
+    amountAdded,
 } from './features/counter/counterSlice'
 
 import reactLogo from './assets/react.svg'
 import './App.css'
 
 function App() {
+    const [incrementedBy, setIncrementedBy] = useState(50)
     const count = useAppSelector(({ counter }) => counter.value)
     const dispatch = useAppDispatch()
 
@@ -35,6 +38,22 @@ function App() {
                 <p>
                     Edit <code>src/App.tsx</code> and save to test HMR
                 </p>
+                <div
+                    style={{
+                        display: 'grid',
+                    }}
+                >
+                    <input
+                        type="range"
+                        value={incrementedBy}
+                        onChange={e => setIncrementedBy(Number(e.target.value))}
+                    />
+                    <button
+                        onClick={() => dispatch(amountAdded(incrementedBy))}
+                    >
+                        Increment By {incrementedBy}
+                    </button>
+                </div>
             </div>
             <p className="read-the-docs">
                 Click on the Vite and React logos to learn more
